@@ -50,7 +50,8 @@ jobs:
         with:
           boot-version: ${{ inputs.boot-version }}
           dependencies: ${{ inputs.dependencies }}
-      - run: 'echo spring-boot: ${{ steps.get-spring-version.outputs.spring-cloud }}'
+      - run: 'echo spring-boot: ${{ steps.get-spring-version.outputs.spring-boot }}'
+      - run: 'echo spring-cloud: ${{ steps.get-spring-version.outputs.spring-cloud }}'
       - run: 'echo spring-cloud-azure: ${{ steps.get-spring-version.outputs.spring-cloud-azure }}'
       - run: 'echo spring-cloud-gcp: ${{ steps.get-spring-version.outputs.spring-cloud-gcp }}'
       - run: 'echo spring-cloud-services: ${{ steps.get-spring-version.outputs.spring-cloud-services }}'
