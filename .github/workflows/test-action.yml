@@ -8,9 +8,6 @@ on:
       dependencies:
         description: 'Dependencies'
         type: string
-      verbose:
-        description: 'Verbose'
-        type: boolean
 jobs:
   dump-context:
     runs-on: ubuntu-latest
@@ -53,14 +50,9 @@ jobs:
         with:
           boot-version: ${{ inputs.boot-version }}
           dependencies: ${{ inputs.dependencies }}
-          verbose: ${{ inputs.verbose }}
+          verbose: true
       - run: 'echo props: ${{ steps.get-spring-version.outputs.props }}'
-      - run: |
-          if [ -n "${{ steps.get-spring-version.outputs.props }}" ]; then
-            echo "java: ${{ fromJson(steps.get-spring-version.outputs.props)['java.version'] }}"
-          else
-            echo "java: "
-          fi
+      - run: 'echo java: ${{ fromJson(steps.get-spring-version.outputs.props)["java.version"] }}'
       - run: 'echo spring-boot: ${{ steps.get-spring-version.outputs.spring-boot }}'
       - run: 'echo spring-cloud: ${{ steps.get-spring-version.outputs.spring-cloud }}'
       - run: 'echo spring-cloud-azure: ${{ steps.get-spring-version.outputs.spring-cloud-azure }}'
