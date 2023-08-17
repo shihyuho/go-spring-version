@@ -62,6 +62,6 @@ runs:
   args:
     - --boot-url=${{ inputs.boot-url }}
     - --starter-url=${{ inputs.starter-url }}
-    - --boot-version=${{ inputs.boot-version }}
-    - --dependency=${{ inputs.dependencies }}
+    - --boot-version='${{ inputs.boot-version }}'
+    - --dependency='${{ inputs.dependencies }}'
     - --output=github
