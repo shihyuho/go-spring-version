@@ -51,20 +51,20 @@ jobs:
           boot-version: ${{ inputs.boot-version }}
           dependencies: ${{ inputs.dependencies }}
           verbose: true
-      - run: 'echo props: ${{ steps.get-spring-version.outputs.props }}'
+      - run: "echo props: ${{ steps.get-spring-version.outputs.props }}"
       - run: "echo java: ${{ fromJson(steps.get-spring-version.outputs.props)['java.version'] }}"
-      - run: 'echo spring-boot: ${{ steps.get-spring-version.outputs.spring-boot }}'
-      - run: 'echo spring-cloud: ${{ steps.get-spring-version.outputs.spring-cloud }}'
-      - run: 'echo spring-cloud-azure: ${{ steps.get-spring-version.outputs.spring-cloud-azure }}'
-      - run: 'echo spring-cloud-gcp: ${{ steps.get-spring-version.outputs.spring-cloud-gcp }}'
-      - run: 'echo spring-cloud-services: ${{ steps.get-spring-version.outputs.spring-cloud-services }}'
-      - run: 'echo spring-modulith: ${{ steps.get-spring-version.outputs.spring-modulith }}'
-      - run: 'echo spring-shell: ${{ steps.get-spring-version.outputs.spring-shell }}'
-      - run: 'echo codecentric-spring-boot-admin: ${{ steps.get-spring-version.outputs.codecentric-spring-boot-admin }}'
-      - run: 'echo hilla: ${{ steps.get-spring-version.outputs.hilla }}'
-      - run: 'echo sentry: ${{ steps.get-spring-version.outputs.sentry }}'
-      - run: 'echo solace-spring-boot: ${{ steps.get-spring-version.outputs.solace-spring-boot }}'
-      - run: 'echo solace-spring-cloud: ${{ steps.get-spring-version.outputs.solace-spring-cloud }}'
-      - run: 'echo testcontainers: ${{ steps.get-spring-version.outputs.testcontainers }}'
-      - run: 'echo vaadin: ${{ steps.get-spring-version.outputs.vaadin }}'
-      - run: 'echo wavefron: ${{ steps.get-spring-version.outputs.wavefron }}'
+      - run: "echo spring-boot: ${{ steps.get-spring-version.outputs.spring-boot }}"
+      - run: "echo spring-cloud: ${{ steps.get-spring-version.outputs.spring-cloud }}"
+      - run: "echo spring-cloud-azure: ${{ steps.get-spring-version.outputs.spring-cloud-azure }}"
+      - run: "echo spring-cloud-gcp: ${{ steps.get-spring-version.outputs.spring-cloud-gcp }}"
+      - run: "echo spring-cloud-services: ${{ steps.get-spring-version.outputs.spring-cloud-services }}"
+      - run: "echo spring-modulith: ${{ steps.get-spring-version.outputs.spring-modulith }}"
+      - run: "echo spring-shell: ${{ steps.get-spring-version.outputs.spring-shell }}"
+      - run: "echo codecentric-spring-boot-admin: ${{ steps.get-spring-version.outputs.codecentric-spring-boot-admin }}"
+      - run: "echo hilla: ${{ steps.get-spring-version.outputs.hilla }}"
+      - run: "echo sentry: ${{ steps.get-spring-version.outputs.sentry }}"
+      - run: "echo solace-spring-boot: ${{ steps.get-spring-version.outputs.solace-spring-boot }}"
+      - run: "echo solace-spring-cloud: ${{ steps.get-spring-version.outputs.solace-spring-cloud }}"
+      - run: "echo testcontainers: ${{ steps.get-spring-version.outputs.testcontainers }}"
+      - run: "echo vaadin: ${{ steps.get-spring-version.outputs.vaadin }}"
+      - run: "echo wavefron: ${{ steps.get-spring-version.outputs.wavefron }}"

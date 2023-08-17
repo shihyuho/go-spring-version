@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: get-current-version
-        run: 'echo get the current spring-boot version'
+        run: "echo get the current spring-boot version"
     outputs:
       spring-boot: ${{ steps.get-current-version.outputs.spring-boot }}
   bump-spring-version:
@@ -72,8 +72,8 @@ jobs:
     needs: [spring-version, current-version]
     if: "${{ needs.spring-version.outputs.spring-boot != needs.current-version.outputs.spring-boot }}"
     steps:
-      - run: 'echo bump spring-boot to ${{ needs.spring-version.outputs.spring-boot }}'
-      - run: 'echo bump spring-cloud to ${{ needs.spring-version.outputs.spring-cloud }}'
+      - run: "echo bump spring-boot to ${{ needs.spring-version.outputs.spring-boot }}"
+      - run: "echo bump spring-cloud to ${{ needs.spring-version.outputs.spring-cloud }}"
 ```
 
 > Refer to [Checking Version Constraints](https://github.com/Masterminds/semver#checking-version-constraints) for more details about comparing semver versions.
