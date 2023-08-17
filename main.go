@@ -73,6 +73,7 @@ type Config struct {
 	TypeID       string
 	Dependencies []string
 	Output       string
+	Verbose      bool
 }
 
 type Metadata struct {
@@ -147,6 +148,7 @@ func main() {
 	flags.StringVarP(&c.BootVersion, "boot-version", "b", c.BootVersion, "Spring Boot version, supports semver comparison")
 	flags.StringSliceVarP(&c.Dependencies, "dependency", "d", c.Dependencies, "List of dependency identifiers to include in the generated project")
 	flags.StringVarP(&c.Output, "output", "o", c.Output, "Output destination, where to write the result. Options: "+outputStdout+", "+outputGithub)
+	flags.BoolVarP(&c.Verbose, "verbose", "v", c.Verbose, "enable verbose output")
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)
 	}
@@ -178,9 +180,18 @@ func run(c Config) (err error) {
 	if err = writeln(c.Output, "spring-boot="+c.BootVersion); err != nil {
 		return err
 	}
+	props := make(map[string]interface{})
 	for k, v := range project.Properties {
+		props[k] = v
 		if bom := firstMatchingPrefix(k, supportedBoms...); bom != "" {
 			if err = writef(c.Output, "%s=%s\n", bom, v); err != nil {
+				return err
+			}
+		}
+	}
+	if c.Verbose {
+		if propsBytes, err := json.Marshal(props); err == nil {
+			if err = writef(c.Output, "props=%s\n", propsBytes); err != nil {
 				return err
 			}
 		}

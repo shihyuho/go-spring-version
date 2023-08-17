@@ -15,8 +15,9 @@ Get the latest Spring Boot version and its associated BOM versions, e.g. Spring 
 | insecure | `true/false`, allow insecure metadata server connections when using SSL (default: `false`) |
 | boot-version | Spring Boot version, supports semver comparison, e.g. `~3.x`, and uses the current version if left blank |
 | dependencies | List of dependency identifiers to include in the generated project, can separate with commas, e.g. `cloud-starter` |
+| verbose | `true/false`, provides additional detailed [outputs](#outputs), often used for debugging purposes |
 
-### Output
+### Outputs
 
 This action provides an output of the BOM versions managed by Spring, which includes the following:
 
