@@ -29,8 +29,6 @@ inputs:
 # The list of outputs can be found in the 'initializr.env.boms' section of the
 # application.yml file located at: https://github.com/spring-io/start.spring.io/blob/main/start-site/src/main/resources/application.yml
 outputs:
-  props:
-    description: "only available when verbose mode is enabled, it contains all the project.properties in JSON format"
   spring-boot:
     description: "spring-boot version"
   spring-cloud:
@@ -61,9 +59,11 @@ outputs:
     description: "vaadin version"
   wavefront:
     description: "wavefront version"
+  props:
+    description: "only available when verbose mode is enabled, it contains all the project.properties in JSON format"
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/shihyuho/go-spring-version:1.0'
+  image: 'docker://ghcr.io/shihyuho/go-spring-version:1'
   args:
     - --boot-url=${{ inputs.boot-url }}
     - --starter-url=${{ inputs.starter-url }}
