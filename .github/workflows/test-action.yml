@@ -55,7 +55,12 @@ jobs:
           dependencies: ${{ inputs.dependencies }}
           verbose: ${{ inputs.verbose }}
       - run: 'echo props: ${{ steps.get-spring-version.outputs.props }}'
-      - run: 'echo java: echo ${{ fromJson(steps.get-spring-version.outputs.props).java-version }}'
+      - run: |
+          if [ -n "${{ steps.get-spring-version.outputs.props }}" ]; then
+            echo "java: ${{ fromJson(steps.get-spring-version.outputs.props)['java.version'] }}"
+          else
+            echo "java: "
+          fi
       - run: 'echo spring-boot: ${{ steps.get-spring-version.outputs.spring-boot }}'
       - run: 'echo spring-cloud: ${{ steps.get-spring-version.outputs.spring-cloud }}'
       - run: 'echo spring-cloud-azure: ${{ steps.get-spring-version.outputs.spring-cloud-azure }}'
