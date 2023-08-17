@@ -312,7 +312,12 @@ func (c *Config) loadMavenProject(action string) (project *mvnparser.MavenProjec
 // flatDependencies flattens the dependencies containing commas
 func (c *Config) flatDependencies() (dependencies []string) {
 	for _, item := range c.Dependencies {
-		dependencies = append(dependencies, strings.Split(item, ",")...)
+		parts := strings.Split(item, ",")
+		for _, part := range parts {
+			if trimmed := strings.TrimSpace(part); trimmed != "" {
+				dependencies = append(dependencies, trimmed)
+			}
+		}
 	}
 	return dependencies
 }
