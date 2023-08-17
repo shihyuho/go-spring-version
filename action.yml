@@ -23,6 +23,9 @@ inputs:
   dependencies:
     description: 'List of dependency identifiers to include in the generated project, can separate with commas'
     required: false
+  verbose:
+    description: 'true/false, provides additional detailed outputs, often used for debugging purposes'
+    default: "false"
 # The list of outputs can be found in the 'initializr.env.boms' section of the
 # application.yml file located at: https://github.com/spring-io/start.spring.io/blob/main/start-site/src/main/resources/application.yml
 outputs:
@@ -66,4 +69,5 @@ runs:
     - --starter-url=${{ inputs.starter-url }}
     - --boot-version=${{ inputs.boot-version }}
     - --dependency=${{ inputs.dependencies }}
+    - --verbose=${{ inputs.verbose }}
     - --output=github
