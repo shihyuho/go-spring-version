@@ -1,0 +1,66 @@
+name: Test Spring Version Action
+on:
+  workflow_dispatch:
+    inputs:
+      boot-version:
+        description: 'Spring Boot version'
+        type: string
+      dependencies:
+        description: 'Dependencies'
+        type: string
+jobs:
+  dump-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        id: dump-github-context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        id: dump-job-context
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        id: dump-steps-context
+        env:
+          STEPS_CONTEXT: ${{ toJSON(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        id: dump-runner-context
+        env:
+          RUNNER_CONTEXT: ${{ toJSON(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        id: dump-strategy-context
+        env:
+          STRATEGY_CONTEXT: ${{ toJSON(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        id: dump-matrix-context
+        env:
+          MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+  test-action:
+    runs-on: ubuntu-latest
+    steps:
+      - id: get-spring-version
+        uses: shihyuho/go-spring-version@main
+        with:
+          boot-version: ${{ inputs.boot-version }}
+          dependencies: ${{ inputs.dependencies }}
+      - run: 'echo spring-boot: ${{ steps.get-spring-version.outputs.spring-cloud }}'
+      - run: 'echo spring-cloud-azure: ${{ steps.get-spring-version.outputs.spring-cloud-azure }}'
+      - run: 'echo spring-cloud-gcp: ${{ steps.get-spring-version.outputs.spring-cloud-gcp }}'
+      - run: 'echo spring-cloud-services: ${{ steps.get-spring-version.outputs.spring-cloud-services }}'
+      - run: 'echo spring-modulith: ${{ steps.get-spring-version.outputs.spring-modulith }}'
+      - run: 'echo spring-shell: ${{ steps.get-spring-version.outputs.spring-shell }}'
+      - run: 'echo codecentric-spring-boot-admin: ${{ steps.get-spring-version.outputs.codecentric-spring-boot-admin }}'
+      - run: 'echo hilla: ${{ steps.get-spring-version.outputs.hilla }}'
+      - run: 'echo sentry: ${{ steps.get-spring-version.outputs.sentry }}'
+      - run: 'echo solace-spring-boot: ${{ steps.get-spring-version.outputs.solace-spring-boot }}'
+      - run: 'echo solace-spring-cloud: ${{ steps.get-spring-version.outputs.solace-spring-cloud }}'
+      - run: 'echo testcontainers: ${{ steps.get-spring-version.outputs.testcontainers }}'
+      - run: 'echo vaadin: ${{ steps.get-spring-version.outputs.vaadin }}'
+      - run: 'echo wavefron: ${{ steps.get-spring-version.outputs.wavefron }}'

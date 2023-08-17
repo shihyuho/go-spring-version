@@ -1,0 +1,67 @@
+name: 'Get the latest Spring Version'
+description: 'Get the latest Spring Boot version and its associated BOM versions, e.g. Spring Cloud.'
+# ref: https://haya14busa.github.io/github-action-brandings/
+branding:
+  icon: 'book'
+  color: 'green'
+inputs:
+  boot-url:
+    description: 'URL of Spring Boot metadata'
+    required: false
+    default: "https://api.spring.io/projects/spring-boot/releases"
+  starter-url:
+    description: 'URL of Starter metadata'
+    required: false
+    default: "https://start.spring.io"
+  insecure:
+    description: 'true/false, allow insecure metadata server connections when using SSL'
+    required: false
+    default: "false"
+  boot-version:
+    description: 'Spring Boot version, supports semver comparison, e.g. ~3.x, and uses the current version if left blank'
+    required: false
+  dependencies:
+    description: 'List of dependency identifiers to include in the generated project, can separate with commas'
+    required: false
+# The list of outputs can be found in the 'initializr.env.boms' section of the
+# application.yml file located at: https://github.com/spring-io/start.spring.io/blob/main/start-site/src/main/resources/application.yml
+outputs:
+  spring-boot:
+    description: "spring-boot version"
+  spring-cloud:
+    description: "spring-cloud version"
+  spring-cloud-azure:
+    description: "spring-cloud-azure version"
+  spring-cloud-gcp:
+    description: "spring-cloud-gcp version"
+  spring-cloud-services:
+    description: "spring-cloud-services version"
+  spring-modulith:
+    description: "spring-modulith version"
+  spring-shell:
+    description: "spring-shell version"
+  codecentric-spring-boot-admin:
+    description: "codecentric-spring-boot-admin version"
+  hilla:
+    description: "hilla version"
+  sentry:
+    description: "sentry version"
+  solace-spring-boot:
+    description: "solace-spring-boot version"
+  solace-spring-cloud:
+    description: "solace-spring-cloud version"
+  testcontainers:
+    description: "testcontainers version"
+  vaadin:
+    description: "vaadin version"
+  wavefront:
+    description: "wavefront version"
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/shihyuho/go-spring-version:1.0'
+  args:
+    - --boot-url=${{ inputs.boot-url }}
+    - --starter-url=${{ inputs.starter-url }}
+    - --boot-version=${{ inputs.boot-version }}
+    - --dependency=${{ inputs.dependencies }}
+    - --output=github
