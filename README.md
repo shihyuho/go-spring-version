@@ -1,8 +1,8 @@
-# Get the latest Spring Version in Go
+# Get the latest Spring version in Go
 
 [![Go Report Cart](https://goreportcard.com/badge/github.com/shihyuho/go-spring-version)](https://goreportcard.com/report/github.com/shihyuho/go-spring-version)
 
-Get the latest Spring Boot version and its associated BOM versions, e.g. Spring Cloud, written in Go.
+Get the latest Spring Boot version and its associated BOM versions, such as Spring Cloud, written in Go.
 
 ## Usage
 

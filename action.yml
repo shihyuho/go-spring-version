@@ -1,5 +1,5 @@
-name: 'Get the latest Spring Version'
-description: 'Get the latest Spring Boot version and its associated BOM versions, e.g. Spring Cloud.'
+name: 'Get the latest Spring version'
+description: 'Get the latest Spring Boot version and its associated BOM versions, such as Spring Cloud.'
 # ref: https://haya14busa.github.io/github-action-brandings/
 branding:
   icon: 'box'

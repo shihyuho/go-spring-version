@@ -43,7 +43,7 @@ const (
 	defaultStarterURL = "https://start.spring.io"
 	defaultBootURL    = "https://api.spring.io/projects/spring-boot/releases"
 	defaultTypeID     = "maven-build"
-	desc              = `This command get the latest Spring Boot version and its associated BOM versions, e.g. Spring Cloud.
+	desc              = `This command get the latest Spring Boot version and its associated BOM versions, such as Spring Cloud.
 
 You can specify the '-b, --boot-version' flag to determine the Spring Boot version,
 or you can leave it blank to use the current version.

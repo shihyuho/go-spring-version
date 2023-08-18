@@ -1,4 +1,4 @@
-name: Test Spring Version Action
+name: Test Spring version Action
 on:
   workflow_dispatch:
     inputs:
