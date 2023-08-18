@@ -190,8 +190,8 @@ func run(c Config) (err error) {
 		}
 	}
 	if c.Verbose {
-		if metadataByes, err := json.Marshal(metadata); err == nil {
-			if err = writef(c.Output, "metadata=%s\n", metadataByes); err != nil {
+		if m, err := json.Marshal(metadata); err == nil {
+			if err = writef(c.Output, "metadata=%s\n", m); err != nil {
 				return err
 			}
 		}
