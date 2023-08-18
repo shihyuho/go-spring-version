@@ -156,7 +156,7 @@ func main() {
 
 // run is the entrypoint
 func run(c Config) (err error) {
-	fmt.Printf("Fetching Spring Boot Metadata from %s\n", c.Metadata.BootURL)
+	fmt.Printf("Fetching Spring Boot Metadata from: %s\n", c.Metadata.BootURL)
 	var boot BootMetadata
 	if err = fetchMetadata(c.Metadata.BootURL, c.Metadata.Insecure, &boot); err != nil {
 		return err
@@ -164,7 +164,7 @@ func run(c Config) (err error) {
 	if c.BootVersion, err = boot.determineBootVersion(c.BootVersion); err != nil {
 		return err
 	}
-	fmt.Printf("Fetching Starter Metadata from %s\n", c.Metadata.StarterURL)
+	fmt.Printf("Fetching Starter Metadata from: %s\n", c.Metadata.StarterURL)
 	var starter StarterMetadata
 	if err = fetchMetadata(c.Metadata.StarterURL, c.Metadata.Insecure, &starter); err != nil {
 		return err
