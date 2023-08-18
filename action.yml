@@ -2,7 +2,7 @@ name: 'Get the latest Spring Version'
 description: 'Get the latest Spring Boot version and its associated BOM versions, e.g. Spring Cloud.'
 # ref: https://haya14busa.github.io/github-action-brandings/
 branding:
-  icon: 'book'
+  icon: 'box'
   color: 'green'
 inputs:
   boot-url:
