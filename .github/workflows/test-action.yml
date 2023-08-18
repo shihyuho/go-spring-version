@@ -51,8 +51,8 @@ jobs:
           boot-version: ${{ inputs.boot-version }}
           dependencies: ${{ inputs.dependencies }}
           verbose: true
-      - run: "echo props: ${{ steps.get-spring-version.outputs.props }}"
-      - run: "echo java: ${{ fromJson(steps.get-spring-version.outputs.props)['java.version'] }}"
+      - run: "echo metadata: ${{ steps.get-spring-version.outputs.metadata }}"
+      - run: "echo java: ${{ fromJson(steps.get-spring-version.outputs.metadata)['java.version'] }}"
       - run: "echo spring-boot: ${{ steps.get-spring-version.outputs.spring-boot }}"
       - run: "echo spring-cloud: ${{ steps.get-spring-version.outputs.spring-cloud }}"
       - run: "echo spring-cloud-azure: ${{ steps.get-spring-version.outputs.spring-cloud-azure }}"

@@ -59,8 +59,8 @@ outputs:
     description: "vaadin version"
   wavefront:
     description: "wavefront version"
-  props:
-    description: "only available when verbose mode is enabled, it contains all the project.properties in JSON format"
+  metadata:
+    description: "only available when verbose mode is enabled, contains detailed information during the processing, in JSON format, you should not assume the structure to remain unchanged"
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/shihyuho/go-spring-version:1'
