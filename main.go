@@ -156,7 +156,7 @@ func main() {
 
 // run is the entrypoint
 func run(c Config) (err error) {
-	fmt.Printf("Fetching Spring Boot Metadata from: %s\n", c.Metadata.BootURL)
+	c.printf("Fetching Spring Boot Metadata from: %s\n", c.Metadata.BootURL)
 	var boot BootMetadata
 	if err = fetchMetadata(c.Metadata.BootURL, c.Metadata.Insecure, &boot); err != nil {
 		return err
@@ -164,7 +164,8 @@ func run(c Config) (err error) {
 	if c.BootVersion, err = boot.determineBootVersion(c.BootVersion); err != nil {
 		return err
 	}
-	fmt.Printf("Fetching Starter Metadata from: %s\n", c.Metadata.StarterURL)
+	c.printf("Final selected spring-boot version: %s\n", c.BootVersion)
+	c.printf("Fetching Starter Metadata from: %s\n", c.Metadata.StarterURL)
 	var starter StarterMetadata
 	if err = fetchMetadata(c.Metadata.StarterURL, c.Metadata.Insecure, &starter); err != nil {
 		return err
@@ -246,7 +247,6 @@ func (b *BootMetadata) determineBootVersion(target string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Println("Final selected spring-boot version:", target)
 	return target, nil
 }
 
@@ -364,4 +364,11 @@ func write(output, text string) (err error) {
 	}
 	_, err = out.WriteString(text)
 	return err
+}
+
+// printf formats according to a format specifier and writes to standard output if verbose is enabled
+func (c *Config) printf(format string, a ...any) {
+	if c.Verbose {
+		fmt.Printf(format, a...)
+	}
 }
