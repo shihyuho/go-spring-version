@@ -13,7 +13,7 @@ Get the latest Spring Boot version and its associated BOM versions, such as Spri
 | boot-url | URL of Spring Boot metadata (default: `https://api.spring.io/projects/spring-boot/releases`) |
 | starter-url | URL of Starter metadata (default: `https://start.spring.io`) |
 | insecure | `true/false`, allow insecure metadata server connections when using SSL (default: `false`) |
-| boot-version | Spring Boot version, supports semver comparison, e.g. `~3.x`, and uses the current version if left blank |
+| boot-version | Spring Boot version, uses the current version if left blank. Supports semver comparison, e.g. `~3.x`, see ["Checking Version Constraints"](https://github.com/Masterminds/semver#checking-version-constraints) for more details. |
 | dependencies | List of dependency identifiers to include in the generated project, can separate with commas, e.g. `cloud-starter` |
 | verbose | `true/false`, provides additional detailed [outputs](#outputs), often used for debugging purposes |
 
@@ -41,15 +41,11 @@ You can refer to the `outputs` section of [action.yml](action.yml) file for more
 
 ### Example
 
+The following example workflow fetches the latest version and then checks the current version. If it spots any differences between the two, it triggers an update and creates a pull request.
+
 ```yaml
-name: Auto bump Spring version
-
-on:
-  schedule:
-    - cron: "0 0 * * *"
-
 jobs:
-  spring-version:
+  latest-version:
     runs-on: ubuntu-latest
     steps:
       - id: get-spring-version
@@ -60,20 +56,56 @@ jobs:
     outputs:
       spring-boot: ${{ steps.get-spring-version.outputs.spring-boot }}
       spring-cloud: ${{ steps.get-spring-version.outputs.spring-cloud }}
+
   current-version:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
       - id: get-current-version
-        run: "echo get the current spring-boot version"
+        run: echo "version=$(mvn help:evaluate -Dexpression=project.parent.version -q -DforceStdout -q)" >> "$GITHUB_OUTPUT"
     outputs:
-      spring-boot: ${{ steps.get-current-version.outputs.spring-boot }}
-  bump-spring-version:
+      spring-boot: ${{ steps.get-current-version.outputs.version }}
+
+  bump-spring:
     runs-on: ubuntu-latest
-    needs: [spring-version, current-version]
-    if: "${{ needs.spring-version.outputs.spring-boot != needs.current-version.outputs.spring-boot }}"
+    permissions:
+      contents: write
+      pull-requests: write
+    needs: [latest-version, current-version]
+    if: "${{ needs.latest-version.outputs.spring-boot != needs.current-version.outputs.spring-boot }}"
     steps:
-      - run: "echo bump spring-boot to ${{ needs.spring-version.outputs.spring-boot }}"
-      - run: "echo bump spring-cloud to ${{ needs.spring-version.outputs.spring-cloud }}"
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Bump version
+        run: |
+          mvn versions:update-parent "-DparentVersion=[${{ needs.latest-version.outputs.spring-boot }}]"
+          mvn versions:set-property "-Dproperty=spring-cloud.version" -DnewVersion=${{ needs.latest-version.outputs.spring-cloud }}
+          mvn versions:commit
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore: bump spring from ${{ needs.current-version.outputs.spring-boot }} to ${{ needs.latest-version.outputs.spring-boot }}"
+          title: "Bump spring from ${{ needs.current-version.outputs.spring-boot }} to ${{ needs.latest-version.outputs.spring-boot }}"
+          body: >-
+            Bumps [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot)
+            from ${{ needs.current-version.outputs.spring-boot }} to ${{ needs.latest-version.outputs.spring-boot }}
 ```
 
-> Refer to [Checking Version Constraints](https://github.com/Masterminds/semver#checking-version-constraints) for more details about comparing semver versions.
+Based on the example above, the code diff for bumping Spring might look like this:
+
+![](./docs/example.jpg)
+
+
