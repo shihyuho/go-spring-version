@@ -98,7 +98,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: "chore: bump spring from ${{ needs.current-version.outputs.spring-boot }} to ${{ needs.latest-version.outputs.spring-boot }}"
-          title: "Bump spring from ${{ needs.current-version.outputs.spring-boot }} to ${{ needs.latest-version.outputs.spring-boot }}"
+          title: "Bump Spring from ${{ needs.current-version.outputs.spring-boot }} to ${{ needs.latest-version.outputs.spring-boot }}"
           body: >-
             Bumps [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot)
             from ${{ needs.current-version.outputs.spring-boot }} to ${{ needs.latest-version.outputs.spring-boot }}
