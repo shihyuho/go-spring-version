@@ -18,7 +18,7 @@ inputs:
     required: false
     default: "false"
   boot-version:
-    description: 'Spring Boot version, supports semver comparison, e.g. ~3.x, and uses the current version if left blank'
+    description: 'Spring Boot version, uses the current version if left blank. Supports semver comparison, e.g. `~3.x`'
     required: false
   dependencies:
     description: 'List of dependency identifiers to include in the generated project, can separate with commas'
