@@ -366,9 +366,7 @@ func write(output, text string) (err error) {
 	return err
 }
 
-// printf formats according to a format specifier and writes to standard output if verbose is enabled
+// printf formats according to a format specifier and writes to standard output
 func (c *Config) printf(format string, a ...any) {
-	if c.Verbose {
-		fmt.Printf(format, a...)
-	}
+	fmt.Printf(format, a...)
 }
