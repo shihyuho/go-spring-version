@@ -73,13 +73,25 @@ jobs:
     outputs:
       spring-boot: ${{ steps.get-current-version.outputs.version }}
 
+  compare-version:
+    runs-on: ubuntu-latest
+    needs: [latest-version, current-version]
+    steps:
+      - id: semver-compare
+        uses: madhead/semver-utils@latest
+        with:
+          version: ${{ needs.latest-version.outputs.spring-boot }}
+          compare-to: ${{ needs.current-version.outputs.spring-boot }}
+    outputs:
+      comparison-result: ${{ steps.semver-compare.outputs.comparison-result }}
+
   bump-spring:
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
-    needs: [latest-version, current-version]
-    if: "${{ needs.latest-version.outputs.spring-boot != needs.current-version.outputs.spring-boot }}"
+    needs: compare-version
+    if: "${{ needs.compare-version.outputs.comparison-result == '>' }}"
     steps:
       - uses: actions/checkout@v3
         with:
